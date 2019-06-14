@@ -123,8 +123,8 @@
                     processData: false,
                     success: function (backData) {
                         console.log(backData);
-                        if(backData.code == 200){
-                           console.log('修改成功!');
+                        if (backData.code == 200) {
+                            console.log('修改成功!');
                         }
                     }
                 });
@@ -132,6 +132,46 @@
 
         });
     </script>
+    <!-- <script>
+        $.ajax({
+            type: 'get',
+            url: 'http://localhost:8000/admin/getuser ',
+            success: function (backData) {
+                console.log(backData);
+                for (var key in backData.data) {
+                    $('input' + key).val(backData.data[key])
+                }
+                $('img.user_pic').attr('src', backData.data.user_pic);
+            }
+        })
+
+        $('#exampleInputFile').on('change', function () {
+            //拿到图片
+            var icon = this.files[0];
+            //生成url
+            var url = URL.createObjectURL(icon);
+            //给img地址
+            $('.user_pic').attr('src', url);
+        })
+
+        $('.btn-success').on('click', function (e) {
+            e.preventDefault();
+            var formData = new FormData($('form')[0]);
+            $.ajax({
+                type: 'post',
+                url: 'http://localhost:8000/admin/userinfo_edit',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (backData) {
+                    console.log(backData);
+                    if (backData.code == 200) {
+                        alert('修改成功')
+                    }
+                }
+            });
+        })
+    </script> -->
 </body>
 
 </html>
