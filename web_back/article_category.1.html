@@ -166,16 +166,47 @@
             //页面一进来要调用一次getCategory();
             getCategory();
 
+
+
             //模态框点击保存按钮
             $('#model_add').click(function () {
+                //判断按钮有没有类
                 if ($(this).hasClass('btn-success')) {
 
+                } else {
+                    //获取用户要新增的 文字类别和别名
+                    var recipient_name = $('#recipient-name').val();
+                    var recipient_nickname = $('#recipient-nickname').val();
+                    //发送ajax请求
+                    $.ajax({
+                        type: 'post',
+                        url: 'http://localhost:8000/admin/category_add',
+                        data: {
+                            name: recipient_name,
+                            slug: recipient_nickname
+                        },
+                        success: function (backData) {
+                            console.log(backData);
+                            if (backData.code == 200) {
+                                //新增成功后,重新的发送一次ajax请求加载所有的文字类别
+                                getCategory();
+                            }
+                        }
+                    });
                 }
 
-            })
+                //隐藏模态框
+                $('#addModal').modal('hide');
+            });
+
+
 
             //点击编辑按钮  弹出的模态框,要修改他的title,还有他的保存按钮名字,还有样式
             $('tbody').on('click', 'a.btn-edit', function () {
+                var name = $(this).parent().prev().prev().text();
+                var slug = $(this).parent().prev().text();
+                $('#recipient-name').val(name);
+                $('#recipient-nickname').val(slug);
                 $('#addModal .modal-title').html('修改分类');
                 $('#model_add').text('保存').addClass('btn-success');
                 $('#addModal').modal('show');
