@@ -24,7 +24,7 @@
                 <div class="col-xs-6">
                     <form class="form-inline">
                         <select id="selCategory" name="" class="form-control input-sm">
-                            <option>所有分类</option>
+                            <option value="">所有分类</option>
                             <option>未分类</option>
                             <option>奇趣事</option>
                             <option>会生活</option>
@@ -317,7 +317,6 @@
         //点击筛选按钮,发送ajax请求,获取对应类型的所有文章.
         $('#btnSearch').on('click',function(e){
             e.preventDefault();
-
             //获取文章类别和 文章状态
             var type = $('#selCategory').val();
             var state = $('#selStatus').val();
@@ -341,6 +340,8 @@
             });
         });
 
+
+        $('#btnSearch').click();
 
 
     </script>
