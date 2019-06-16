@@ -237,6 +237,10 @@
 
             //点击新增分类按钮,  弹出的模态框 里面的信息要还原
             $('#addCategory').on('click', function () {
+                //把弹出模态框清空
+                $('#recipient-id').val("");
+                $('#recipient-name').val("");
+                $('#recipient-nickname').val("");
                 $('#addModal .modal-title').html('新增分类');
                 $('#model_add').text('新增').removeClass('btn-success');
             })
