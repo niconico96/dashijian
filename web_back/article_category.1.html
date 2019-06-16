@@ -92,7 +92,7 @@
                 <div class="modal-body">
                     <form>
                         <!-- input标签的type属性是hidden,那他就是一个隐藏域,他本身就是看不见的. -->
-                        <input type="hidden" name="id" id="recipient-id">
+                        <input name="id" id="recipient-id" type="hidden">
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">分类名称:</label>
                             <input type="text" name="name" class="form-control" id="recipient-name">
@@ -170,8 +170,27 @@
 
             //模态框点击保存按钮
             $('#model_add').click(function () {
-                //判断按钮有没有类
                 if ($(this).hasClass('btn-success')) {
+                    // var editID = $('#recipient-id').val();
+                    // var editName = $('#recipient-name').val();
+                    // var editNickName = $('#recipient-nickname').val();
+                    var data1 = $('form').serialize();
+                    $.ajax({
+                        type: 'post',
+                        url: 'http://localhost:8000/admin/category_edit',
+                        // id: editID,
+                        // name: editName,
+                        // slug: editNickName
+                        data: data1,
+                        success: function (backData) {
+                            //修改成功后重新渲染数据
+                            if (backData.code == 200) {
+                                getCategory();
+                            }
+                        }
+                    })
+
+
 
                 } else {
                     //获取用户要新增的 文字类别和别名
@@ -203,10 +222,14 @@
 
             //点击编辑按钮  弹出的模态框,要修改他的title,还有他的保存按钮名字,还有样式
             $('tbody').on('click', 'a.btn-edit', function () {
+                var id = $(this).attr('data-id');
                 var name = $(this).parent().prev().prev().text();
                 var slug = $(this).parent().prev().text();
+
                 $('#recipient-name').val(name);
                 $('#recipient-nickname').val(slug);
+                $('#recipient-id').val(id);
+
                 $('#addModal .modal-title').html('修改分类');
                 $('#model_add').text('保存').addClass('btn-success');
                 $('#addModal').modal('show');
