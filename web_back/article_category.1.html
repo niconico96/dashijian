@@ -120,6 +120,7 @@
         $('#model_shutoff').click(function () {
             alert('shutoff');
             $('#addModal').modal('hide');
+
         });
     </script>
 
@@ -129,8 +130,8 @@
             <td>{{$value.name}}</td>
             <td>{{$value.slug}}</td>
             <td class="text-center">
-                <a href="javascript:void(0);" data-id="{{$value.id}}" class="btn btn-info btn-xs btn-edit">编辑</a>
-                <a href="javascript:void(0);" data-id="{{$value.id}}" class="btn btn-danger btn-xs btn-delete">删除</a>
+                <a href="javascript:" data-id="{{$value.id}}" class="btn btn-info btn-xs btn-edit">编辑</a>
+                <a href="javascript:" data-id="{{$value.id}}" class="btn btn-danger btn-xs btn-delete">删除</a>
             </td>
         </tr>
         {{/each}}
@@ -166,13 +167,25 @@
             getCategory();
 
             //模态框点击保存按钮
-            // $('#model_add').click(function () {
-            //     if ($(this).hasClass('btn-success')) {
+            $('#model_add').click(function () {
+                if ($(this).hasClass('btn-success')) {
 
-            //     }
+                }
 
-            // })
+            })
 
+            //点击编辑按钮  弹出的模态框,要修改他的title,还有他的保存按钮名字,还有样式
+            $('tbody').on('click', 'a.btn-edit', function () {
+                $('#addModal .modal-title').html('修改分类');
+                $('#model_add').text('保存').addClass('btn-success');
+                $('#addModal').modal('show');
+            })
+
+            //点击新增分类按钮,  弹出的模态框 里面的信息要还原
+            $('#addCategory').on('click', function () {
+                $('#addModal .modal-title').html('新增分类');
+                $('#model_add').text('新增').removeClass('btn-success');
+            })
 
             //删除文章
             $('#model_add').on('click', function () {
@@ -182,7 +195,7 @@
                     //获取当前删除的这条数据(这条文章类别)的id
                     var id = $(this).attr('data-id');
                     console.log(id);
-                    
+
                     //发送ajax请求,删除这条数据
                     $.ajax({
                         type: 'post',
